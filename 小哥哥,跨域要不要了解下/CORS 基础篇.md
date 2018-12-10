@@ -3,6 +3,7 @@
 - [【小哥哥, 跨域要不要了解下】JSONP](https://juejin.im/post/5c07fa04e51d451de968906b)
 - [【小哥哥, 跨域要不要了解下】CORS 基础篇](https://juejin.im/post/5c0a55e76fb9a049ef2665ba)
 - [【小哥哥, 跨域要不要了解下】CORS 进阶篇](https://juejin.im/post/5c0b5a8851882548e9380afb)
+- [【小哥哥, 跨域要不要了解下】NGINX 反向代理](https://juejin.im/post/5c0e6d606fb9a049f66bf246)
 
 > 在[前一篇文章](https://juejin.im/post/5c07fa04e51d451de968906b)中, 我们一起学习了第一种跨域处理方案 `JSONP`. 这种方法相对比较原始, 优点是兼容性好, 就连现代前端没怎么听说过的 `IE 6` 上跑起来都是妥妥的. 然鹅, 它也就这一点优点了. 其缺点有: 只支持 GET 请求, 配置繁琐(前后端都需要调整代码), 在 window 上注册各种回调函数, 开发体验差....
 > ![2018-12-07-10-07-21](https://user-gold-cdn.xitu.io/2018/12/7/167885f8190c15f9?w=578&h=552&f=png&s=402218)
