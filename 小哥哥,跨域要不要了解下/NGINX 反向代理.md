@@ -4,6 +4,7 @@
 - [【小哥哥, 跨域要不要了解下】CORS 基础篇](https://juejin.im/post/5c0a55e76fb9a049ef2665ba)
 - [【小哥哥, 跨域要不要了解下】CORS 进阶篇](https://juejin.im/post/5c0b5a8851882548e9380afb)
 - [【小哥哥, 跨域要不要了解下】NGINX 反向代理](https://juejin.im/post/5c0e6d606fb9a049f66bf246)
+- [【小哥哥, 跨域要不要了解下】ServerProxy](https://juejin.im/post/5c153c456fb9a049ca373eed)
 
 > 原本本系列文章是不打算详写 NGINX 反向代理的. 至于为什么不想写呢? 当然是因为我不太会咯~~
 ![2018-12-10-17-47-38](https://user-gold-cdn.xitu.io/2018/12/10/167985b1ef655cd0?w=590&h=556&f=png&s=428450)
