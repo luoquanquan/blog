@@ -214,6 +214,8 @@ Jsonp.prototype.createScript = function() {
     script.src = this.url
     script.onload = function() {
         this.remove()
+        // 删除 window 下定义的无用方法
+        delete window[this.callbackName]
     }
     document.body.appendChild(script)
 }
