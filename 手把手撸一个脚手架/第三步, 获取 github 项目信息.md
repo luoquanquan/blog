@@ -36,7 +36,13 @@ ps: 这一步基于 github 若有没使用过的小伙伴, 请加油
 
 > baseUrl: [https://api.github.com](https://api.github.com)
 
-作为一个开发工具, 我们需要获取的项目信息包含以下几个:
+作为一个脚手架, 我们需要获取的项目信息包含以下几个:
+
+===========================  补充  ==============================================
+
+## ps 由于 github 开放 api 有请求次数限制(未授权每小时 60 次), 所以可能存在下图的情况, 解决方法是在请求中加入认证信息(authToken), 详情参考系列文章[下一篇](https://juejin.im/post/5bed6ff2f265da61137ed948), 本节的临时处理方案为执行命令时候添加自己的 github 账号密码即可.
+
+![2018-12-19-23-48-57](http://img.blog.niubishanshan.top/2018-12-19-23-48-57.png)
 
 ### 获取组织所属项目列表[文档](https://developer.github.com/v3/repos/#list-organization-repositories)
 
@@ -44,6 +50,9 @@ ps: 这一步基于 github 若有没使用过的小伙伴, 请加油
 
 ```js
 curl https://api.github.com/orgs/learn-cli-organization/repos
+
+// 如果报了上图所示错误, 在 curl 和接口地址中间加入 -u "你的github账号:你的github密码" 中间的冒号不要删除, 作为分割
+curl -u "你的github账号:你的github密码" https://api.github.com/orgs/learn-cli-organization/repos
 
 // 返回的结果
 [
@@ -158,6 +167,9 @@ curl https://api.github.com/orgs/learn-cli-organization/repos
 
 ```js
 curl https://api.github.com/repos/learn-cli-organization/demo/tags
+
+// 如果报了上图所示错误, 在 curl 和接口地址中间加入 -u "你的github账号:你的github密码" 中间的冒号不要删除, 作为分割
+curl -u "你的github账号:你的github密码" https://api.github.com/repos/learn-cli-organization/demo/tags
 
 // 返回结果
 [
