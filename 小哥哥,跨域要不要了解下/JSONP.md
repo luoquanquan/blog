@@ -4,6 +4,7 @@
 - [【小哥哥, 跨域要不要了解下】CORS 基础篇](https://juejin.im/post/5c0a55e76fb9a049ef2665ba)
 - [【小哥哥, 跨域要不要了解下】CORS 进阶篇](https://juejin.im/post/5c0b5a8851882548e9380afb)
 - [【小哥哥, 跨域要不要了解下】NGINX 反向代理](https://juejin.im/post/5c0e6d606fb9a049f66bf246)
+- [【小哥哥, 跨域要不要了解下】ServerProxy](https://juejin.im/post/5c153c456fb9a049ca373eed)
 
 > 打算纯前端做一个[接口测试工具](https://juejin.im/post/5bfd43986fb9a049ed308f1a), 直到遇到
 > ![2018-12-05-14-13-31](https://user-gold-cdn.xitu.io/2018/12/6/1677f29fc07225a2?w=2556&h=64&f=png&s=69130)
