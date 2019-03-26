@@ -142,3 +142,176 @@ willApply.customApply(obj, ['i am regret very much~', 'can you forgive me?']);
 这就结了~
 
 不得不说 es6 的 `...` 运算符真的是爽了不少呢.
+
+## bind
+
+bind 是一个很有意思的用法, 它返回的是一个包装函数, 相当于把当前的函数 wrapper 了一层, 并且可以分两次传递参数~
+
+### bind 的用法
+
+```js
+function willBind(param1, param2) {
+    console.log('this.a, this.b', this.a, this.b)
+    console.log('param1, param2', param1, param2)
+}
+
+const obj = {
+    a: 1,
+    b: 2
+}
+
+const boundFunc = willBind.bind(obj, 'i am regret very much~');
+boundFunc('can you forgive me?')
+// this.a, this.b 1 2
+// param1, param2 i am regret very much~ can you forgive me?
+```
+
+### bind 原生实现
+
+```js
+Function.prototype.customBind = function(context, ...restArgs) {
+    // 这里能把 this(就是你最终要执行的函数)
+    // 和 context 保存起来形成一个闭包
+    // restArgs 为执行 bind 时传入的已知参数
+    const self = this;
+    return function(...args) {
+        return self.apply(context, [...restArgs, ...args])
+    }
+}
+
+// ==========  测试代码  ========================================================\
+function willBind(param1, param2) {
+    console.log('this.a, this.b', this.a, this.b);
+    console.log('param1, param2', param1, param2);
+    return 'success'
+}
+
+const obj = {
+    a: 1,
+    b: 2
+}
+
+const bound = willBind.customBind(obj, 'i am regret very much~');
+bound('can you forgive me?')
+// this.a, this.b 1 2
+// param1, param2 i am regret very much~ can you forgive me?
+```
+
+看上去已经没有了任何的问题. 但是, 既然 bind 方法返回的是一个函数, 那么肯定是可以通过 new 来调用的, 废话少说我们试一下~
+
+```js
+Function.prototype.customBind = function(context, ...restArgs) {
+    // 这里能把 this(就是你最终要执行的函数)
+    // 和 context 保存起来形成一个闭包
+    // restArgs 为执行 bind 时传入的已知参数
+    const self = this;
+    return function(...args) {
+        return self.apply(context, [...restArgs, ...args])
+    }
+}
+
+// ==========  测试代码  ========================================================\
+function willBind(param1, param2) {
+    console.log('this.a, this.b', this.a, this.b);
+    console.log('param1, param2', param1, param2);
+    this.a = 3;
+}
+
+const obj = {
+    a: 1,
+    b: 2
+}
+
+const bound = willBind.customBind(obj, 'i am regret very much~');
+new bound('can you forgive me?');
+console.log(obj);
+// this.a, this.b 3 2
+// param1, param2 i am regret very much~ can you forgive me?
+// {a: 3, b: 2}
+// 前两行输出没有任何的问题, 但是第三行打印的日志我们不难发现, 我们居然隐式修改了 obj 对象. 可怕😂
+```
+
+然鹅, 我们试一下原生的 bind 函数的处理方式.
+
+```js
+const obj = {a: 666};
+function b() {
+    // 在这里直接 console.log(this) 会更加直观. 我是懒得写了
+    // 有兴趣的同学可以试下
+    this.a = 1234;
+}
+
+const B = b.bind(obj);
+new B();
+console.log(obj);  // {a: 666}
+B();
+console.log(obj); // {a: 1234}
+```
+
+原生的 bind 函数中, 在使用 new 调用的时候, 并没有改变 this 的指向, 所以我们执行 `new B()` 之后打印 obj 的值并没有发生改变.只有直接执行 `B()` 的时候才有了变化.
+
+```js
+Function.prototype.customBind = function(context, ...restArgs) {
+    const self = this;
+    return function F(...args) {
+        // 如果方法是通过 new 调用的, 不改变 this 指向, 按照常规的
+        if(this instanceof F) {
+            return new self(...restArgs, ...args);
+        }
+
+        return self.apply(context, [...restArgs, ...args]);
+    }
+}
+
+// ==========  测试代码  ========================================================\
+function willBind(param1, param2) {
+    console.log('this.a, this.b', this.a, this.b);
+    console.log('param1, param2', param1, param2);
+    this.a = 3;
+}
+
+const obj = {
+    a: 1,
+    b: 2
+}
+
+const bound = willBind.customBind(obj, 'i am regret very much~');
+new bound('can you forgive me?');
+console.log(obj);
+// this.a, this.b undefined undefined
+// param1, param2 i am regret very much~ can you forgive me?
+// {a: 1, b: 2}
+```
+
+看上去貌似,,, 完美~
+
+最后, 再用我们的 `new B` 方法测试下?
+
+```js
+Function.prototype.customBind = function(context, ...restArgs) {
+    const self = this;
+    return function F(...args) {
+        // 如果方法是通过 new 调用的, 不改变 this 指向, 按照常规的
+        if(this instanceof F) {
+            return new self(...restArgs, ...args);
+        }
+
+        return self.apply(context, [...restArgs, ...args]);
+    }
+}
+
+// ==========  测试代码  ========================================================\
+const obj = {a: 666};
+function b() {
+    console.log(this);
+    this.a = 1234;
+}
+
+const B = b.customBind(obj);
+
+// 对于下边的结果, 没啥好说的了, 自己看看吧~
+new B(); // b {a: 1234}
+console.log(obj);  // {a: 666}
+B(); // {a: 666}
+console.log(obj); // {a: 1234}
+```
